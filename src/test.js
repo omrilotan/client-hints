@@ -58,15 +58,38 @@ describe('client-hints', () => {
       assert.equal(hints.vendorVersion, '100.0.4758.109')
     })
   })
-  describe('Sec-CH-HA-Platform, Sec-CH-HA-Platform-Version', () => {
+  describe('Sec-CH-UA-Platform, Sec-CH-UA-Platform-Version', () => {
     it('get platform and version', () => {
       const headers = new Headers({
-        'Sec-CH-HA-Platform': '"macOS"',
-        'Sec-CH-HA-Platform-Version': '"12.1.0"'
+        'Sec-CH-UA-Platform': '"macOS"',
+        'Sec-CH-UA-Platform-Version': '"12.1.0"'
       })
       const hints = new ClientHints(headers)
       assert.equal(hints.platform, 'macOS')
       assert.equal(hints.platformVersion, '12.1.0')
     })
+  })
+  describe('general', () => {
+    [
+      ['arch', 'Sec-CH-UA-Arch', '"x64"', 'x64'],
+      ['fetchDest', 'Sec-Fetch-Dest', 'document', 'document'],
+      ['fetchDestination', 'Sec-Fetch-Dest', 'document', 'document'],
+      ['fetchMode', 'Sec-Fetch-Mode', 'navigate', 'navigate'],
+      ['fetchSite', 'Sec-Fetch-Site', 'same-origin', 'same-origin'],
+      ['fetchUser', 'Sec-Fetch-User', '?1', true],
+      ['downlink', 'Downlink', '1.7', 1.7],
+      ['platform', 'Sec-CH-UA-Platform', '"macOS"', 'macOS'],
+      ['platformVersion', 'Sec-CH-UA-Platform-Version', '"12.1.0"', '12.1.0']
+    ].forEach(
+      ([feature, header, value, expected]) => {
+        it([feature, header].join(': '), () => {
+          const headers = new Headers({
+            [header]: value
+          })
+          const hints = new ClientHints(headers)
+          assert.equal(hints[feature], expected)
+        })
+      }
+    )
   })
 })

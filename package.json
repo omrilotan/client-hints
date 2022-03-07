@@ -1,6 +1,6 @@
 {
   "name": "client-hints",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "description": "🕵️‍♂️ Parse client hints headers",
   "keywords": [
     "client-hints",
@@ -13,24 +13,32 @@
     "type": "git",
     "url": "git@github.com:omrilotan/client-hints.git"
   },
-  "type":"module",
+  "files": [
+    "index.*"
+  ],
+  "type": "module",
   "main": "index.cjs",
-  "module": "index.js",
+  "module": "index.mjs",
   "exports": {
     ".": {
       "require": "./index.cjs",
-      "import": "./index.js"
+      "import": "./index.mjs"
     }
   },
+  "types": "index.d.ts",
   "scripts": {
-    "build": "esbuild index.js --outfile=index.cjs --format=cjs --bundle --target=node16",
-    "test": "node --experimental-fetch ./node_modules/mocha/bin/mocha --recursive",
-    "lint": "standard"
+    "prepublishOnly": "npm run build",
+    "build": "scripts/build.sh",
+    "test": "node --experimental-fetch ./node_modules/mocha/bin/mocha src --recursive",
+    "lint": "eslint src/** --plugin log"
   },
   "devDependencies": {
-    "chai": "^4.3.6",
+    "@babel/eslint-parser": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
     "esbuild": "^0.14.25",
+    "eslint": "^7.18.0",
+    "eslint-plugin-log": "^1.2.7",
     "mocha": "^9.2.1",
-    "standard": "^16.0.4"
+    "typescript": "^4.6.2"
   }
 }

@@ -32,7 +32,7 @@ const extractTokens = (string, tokens) => string.replace(
 function getIndexes (string, substring) {
   const indexes = []
   let index = -1
-  while (true) {
+  while (true) { // eslint-disable-line no-constant-condition
     index = string.indexOf(substring, index + 1)
     if (index === -1) {
       break
