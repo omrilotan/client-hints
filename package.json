@@ -1,0 +1,36 @@
+{
+  "name": "client-hints",
+  "version": "0.1.0",
+  "description": "🕵️‍♂️ Parse client hints headers",
+  "keywords": [
+    "client-hints",
+    "headers",
+    "🕵️‍♂️"
+  ],
+  "author": "omrilotan <hi@omrilotan.com> (https://omrilotan.com/)",
+  "license": "Unlicense",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:omrilotan/client-hints.git"
+  },
+  "type":"module",
+  "main": "index.cjs",
+  "module": "index.js",
+  "exports": {
+    ".": {
+      "require": "./index.cjs",
+      "import": "./index.js"
+    }
+  },
+  "scripts": {
+    "build": "esbuild index.js --outfile=index.cjs --format=cjs --bundle --target=node16",
+    "test": "node --experimental-fetch ./node_modules/mocha/bin/mocha --recursive",
+    "lint": "standard"
+  },
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "esbuild": "^0.14.25",
+    "mocha": "^9.2.1",
+    "standard": "^16.0.4"
+  }
+}

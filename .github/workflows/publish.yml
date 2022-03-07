@@ -1,0 +1,22 @@
+name: Publish
+on:
+  - push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version:
+          - '17.6'
+    steps:
+    - uses: actions/checkout@v2
+    - run: npm i
+    - run: npm t
+    - run: npm run lint
+    - run: npm run build
+    - run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+      if: github.ref == 'refs/heads/main'
+      env:
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    - run: npx @lets/publish
+      if: github.ref == 'refs/heads/main'
