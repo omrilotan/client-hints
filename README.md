@@ -20,6 +20,8 @@ app.get('/api-endpoint', (req, res) => {
 # Available detections
 All detections return `undefined` if the relevant header is not available.
 
+Examples:
+
 - mobile: `true`, `false`, `undefined`
 - vendorName: `'Google Chrome'`, `undefined`
 - vendorVersion: `'100.0.4758.109'`, `undefined`
@@ -32,11 +34,9 @@ const hints = new ClientHints(req.headers)
 logger.info(`Page view on URL ${req.url} from ${[ hints.mobile, hints.vendorName, hints.vendorVersion ].join(' ')}`)
 ```
 
-# Client hints
-
 | Feature | Type | Header | Meaning | Adoption level
 | - | - | - | - | -
-| `vendorName` | _string_ | _string_ | Sec-CH-UA / Sec-CH-UA-Full-Version-List | User Agent vendor version list | Experimental
+| `vendorName` | _string_ | Sec-CH-UA / Sec-CH-UA-Full-Version-List | User Agent vendor version list | Experimental
 | `vendorVersion` | _string_ | Sec-CH-UA-Full-Version | User agent vendor version | Experimental
 | `mobile` | _boolean_ | Sec-CH-UA-Mobile | Boolean: Is this a mobile device | Experimental
 | `platform` | _string_ | Sec-CH-UA-Platform | Operating system name | Experimental
