@@ -5,7 +5,7 @@
  */
 export function parse (input) {
   try {
-    return JSON.parse(input).trim()
+    return JSON.parse(input)?.trim()
   } catch (error) {
     return input
   }

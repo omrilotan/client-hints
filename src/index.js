@@ -26,7 +26,7 @@ export class ClientHints {
     )
   }
 
-  #_uaVendorsList
+  #store = new Map()
 
   /**
    * @param {string} header name
@@ -41,15 +41,15 @@ export class ClientHints {
   }
 
   get #uaVendorsList () {
-    if (!this.#_uaVendorsList) {
+    if (!this.#store.has('uaVendorsList')) {
       const header = this.#get('sec-ch-ua-full-version-list') || this.#get('sec-ch-ua')
       if (header) {
-        this.#_uaVendorsList = uaVendorsList(header)
+        this.#store.set('uaVendorsList', uaVendorsList(header))
       } else {
-        this.#_uaVendorsList = []
+        this.#store.set('uaVendorsList', [])
       }
     }
-    return this.#_uaVendorsList
+    return this.#store.get('uaVendorsList')
   }
 
   /**

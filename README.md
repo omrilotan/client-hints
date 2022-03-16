@@ -13,26 +13,12 @@ app.get('/api-endpoint', (req, res) => {
   const isMobile = hints.mobile ?? (userAgentParser(req.get('user-agent')).device?.type === 'mobile')
   //                   ↑ cheap           ↑ more expensive
 
-  res.send( isMobile ? 'Mobile' : 'Desktop' )
+  res.send( isMobile ? 'Mobile page' : 'Desktop page' )
 })
 ```
 
 # Available detections
 All detections return `undefined` if the relevant header is not available.
-
-Examples:
-
-- mobile: `true`, `false`, `undefined`
-- vendorName: `'Google Chrome'`, `undefined`
-- vendorVersion: `'100.0.4758.109'`, `undefined`
-
-```js
-import { ClientHints } from 'client-hints'
-
-const hints = new ClientHints(req.headers)
-
-logger.info(`Page view on URL ${req.url} from ${[ hints.mobile, hints.vendorName, hints.vendorVersion ].join(' ')}`)
-```
 
 | Feature | Type | Header | Meaning | Adoption level
 | - | - | - | - | -
@@ -58,6 +44,8 @@ logger.info(`Page view on URL ${req.url} from ${[ hints.mobile, hints.vendorName
 
 ## Client Hints Intruction Response Header
 Set the value of `Accept-CH` header to include the headers you want the browse to send.
+
+Example:
 ```
 Accept-CH: Sec-CH-UA-Mobile,Sec-CH-UA-Full-Version,Sec-CH-UA-Full-Version-List,Sec-CH-UA-Model,Sec-CH-UA-Platform,Sec-CH-UA-Platform-Version,ECT
 ```
