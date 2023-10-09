@@ -9,13 +9,19 @@ import { ClientHints } from "client-hints";
 import { userAgentParser } from "some-user-agent-parser-library";
 
 app.get("/api-endpoint", (req, res) => {
-  const hints = new ClientHints(req.headers);
+  const hints = new ClientHints(req);
 
   const isMobile =
     hints.mobile ?? // cheap
     userAgentParser(req.get("user-agent")).device?.type === "mobile"; // more expensive
 
-  res.send(isMobile ? "Mobile page" : "Desktop page");
+  const browserName =
+    hints.vendorName ?? // cheap
+    userAgentParser(req.get("user-agent")).browser?.name; // more expensive
+
+  console.log(JSON.stringify(hints, null, 2)); // Serialises all available hints
+
+  res.send(`${isMobile ? "Mobile" : "Desktop"} browser: ${browserName}`);
 });
 ```
 

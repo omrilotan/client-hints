@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "lib": ["esnext", "dom"],
+    "lib": ["esnext", "dom", "dom.iterable"],
     "module": "esnext",
     "types": ["@types/node", "@types/jest"],
     "esModuleInterop": true,

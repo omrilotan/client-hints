@@ -83,6 +83,7 @@ describe("client-hints", () => {
       ["downlink", "Downlink", "1.7", 1.7],
       ["platform", "Sec-CH-UA-Platform", '"macOS"', "macOS"],
       ["platformVersion", "Sec-CH-UA-Platform-Version", '"12.1.0"', "12.1.0"],
+      ["purpose", "Sec-Purpose", "prefetch", "prefetch"],
     ].forEach(
       ([feature, header, value, expected]: [string, string, string, any]) => {
         it([feature, header].join(": "), () => {
@@ -94,5 +95,33 @@ describe("client-hints", () => {
         });
       },
     );
+    it("accepts request object", () => {
+      const request = new Request("https://example.com", {
+        headers: {
+          "Sec-CH-UA-Platform": "macOS",
+        },
+      });
+      const hints = new ClientHints(request);
+      assert.equal(hints.platform, "macOS");
+    });
+    it("pases to JSON", () => {
+      const headers = new Headers({
+        "sec-ch-ua":
+          '"Google Chrome";v="117", "Not;A=Brand";v="8", "Chromium";v="117"',
+        "sec-ch-ua-full-version": '"117.0.5938.132"',
+        "sec-ch-ua-full-version-list":
+          '"Google Chrome";v="117.0.5938.132", "Not;A=Brand";v="8.0.0.0", "Chromium";v="117.0.5938.132"',
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-model": '""',
+        "sec-ch-ua-platform": '"macOS"',
+        "sec-ch-ua-platform-version": '"12.5.1"',
+        "sec-fetch-dest": "document",
+        "sec-fetch-mode": "navigate",
+        "sec-fetch-site": "none",
+        "sec-fetch-user": "?1",
+      });
+      const hints = new ClientHints(headers);
+      expect(JSON.stringify(hints, null, 2)).toMatchSnapshot();
+    });
   });
 });

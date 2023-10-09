@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`client-hints general pases to JSON 1`] = `
+"{
+  "mobile": false,
+  "vendorName": "Google Chrome",
+  "vendorVersion": "117.0.5938.132",
+  "platform": "macOS",
+  "platformVersion": "12.5.1",
+  "fetchSite": "none",
+  "fetchMode": "navigate",
+  "fetchDest": "document",
+  "fetchDestination": "document",
+  "fetchUser": true
+}"
+`;

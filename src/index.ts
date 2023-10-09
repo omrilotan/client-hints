@@ -30,20 +30,15 @@ const HEADERS = {
   WIDTH: "width",
 };
 
-interface Headers {
-  entries(): Iterable<[string, string]>;
-}
-
 export class ClientHints {
   entries: [string, string][];
-  constructor(headers: Headers | object) {
+  constructor(input: Request | Headers | object) {
+    const headers =
+      input instanceof Request ? (input as Request).headers : input;
     const entries =
-      Symbol.iterator in headers
-        ? Array.from(
-            (headers as Headers).entries() as Iterable<[string, string]>,
-          )
+      headers instanceof Headers
+        ? Array.from((headers as globalThis.Headers).entries())
         : Object.entries(headers);
-
     this.entries = entries.map(([key, value]) => [key.toLowerCase(), value]);
   }
 
@@ -72,6 +67,16 @@ export class ClientHints {
       }
     }
     return this.#store.get("uaVendorsList");
+  }
+
+  toJSON(): Record<string, string | number | boolean> {
+    return Object.getOwnPropertyNames(Object.getPrototypeOf(this))
+      .filter((name) => name !== "constructor")
+      .reduce(
+        (acc, name) =>
+          this[name] !== "" ? Object.assign(acc, { [name]: this[name] }) : acc,
+        {},
+      );
   }
 
   get mobile(): boolean {
