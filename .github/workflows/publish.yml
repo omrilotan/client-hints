@@ -7,20 +7,38 @@ jobs:
     strategy:
       matrix:
         node-version:
-          - '17.6'
+          - "20"
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: '17.6'
-    - run: node --version
-    - run: npm i
-    - run: npm t
-    - run: npm run lint
-    - run: npm run build
-    - run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-      if: github.ref == 'refs/heads/main'
-      env:
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-    - run: npx @lets/publish
-      if: github.ref == 'refs/heads/main'
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+      - run: node --version
+      - run: npm i
+      - run: npm t
+      - run: npm run format
+      - name: commit auto fixes
+        env:
+          USERNAME: ${{ github.actor }}
+          BRANCH: ${{ github.ref_name }}
+          REPO: ${{ github.repository }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ "$(git diff --quiet && echo 0 || echo $?)" -gt 0 ]; then
+            git config --global user.email "${USERNAME}@users.noreply.github.com" --replace-all
+            git config --global user.name "$USERNAME" --replace-all
+            git commit -am "😎 Autofix"
+            git remote set-url origin https://${TOKEN}@github.com/$REPO.git
+            git push origin $BRANCH
+            exit 1
+          fi
+      - run: npm run build
+      - name: Publish package to NPM
+        if: github.ref == 'refs/heads/main'
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+          npx @lets/publish

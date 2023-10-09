@@ -1,5 +1,18 @@
 #!/usr/bin/env bash
 
-esbuild src/index.js --outfile=index.cjs --format=cjs --bundle --target=node16
-esbuild src/index.js --outfile=index.mjs --format=esm --bundle --target=node16
-tsc src/index.js --declaration --allowJs --emitDeclarationOnly --outDir .
+failures=0
+
+esbuild src/index.ts --outfile=index.cjs --format=cjs --bundle --sourcemap
+failures=$((failures + $?))
+
+esbuild src/index.ts --outfile=index.mjs --format=esm --bundle --sourcemap
+failures=$((failures + $?))
+
+tsc src/index.ts --declaration --emitDeclarationOnly --declarationMap --outDir types --target esnext --moduleResolution node
+failures=$((failures + $?))
+
+mv types/index.d.ts .
+mv types/index.d.ts.map .
+rm -rf types
+
+exit $failures

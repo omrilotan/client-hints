@@ -1,3 +1,6 @@
 .*
 src
 scripts
+jest.config.cjs
+tsconfig.json
+

@@ -1,5 +1,2 @@
 node_modules
-*.cjs
-*.mjs
-*.d.ts
-
+/index.*
