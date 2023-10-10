@@ -56,7 +56,11 @@ All detections return `undefined` if the relevant header is not available.
 
 Set the value of `Accept-CH` header to include the headers you want the browse to send.
 
-Example:
+```plaintext
+Accept-CH: Sec-CH-UA-Mobile,Sec-CH-UA-Full-Version,Sec-CH-UA-Full-Version-List,Sec-CH-UA-Model,Sec-CH-UA-Platform,Sec-CH-UA-Platform-Version,ECT
+```
+
+Include all available hints:
 
 ```plaintext
 Accept-CH: *
