@@ -3,8 +3,9 @@
  */
 export function parse(input: any): any {
   try {
+    if (!input) return undefined;
     return JSON.parse(input)?.trim();
   } catch (error) {
-    return input;
+    return input ?? undefined;
   }
 }

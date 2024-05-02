@@ -48,11 +48,11 @@ export class ClientHints {
    * @param name: header name
    * @returns comma separted list of header values
    */
-  #get(name: string): string {
-    return this.entries
-      .filter(([key]) => key === name)
-      .map(([, value]) => value)
-      .join(", ");
+  #get(name: string): string | undefined {
+    const list = this.entries
+    .filter(([key]) => key === name)
+    .map(([, value]) => value);
+    return list.length ? list.join(", ") : undefined;
   }
 
   get #uaVendorsList(): { name: string; v?: string; version?: string }[] {
@@ -79,16 +79,17 @@ export class ClientHints {
       );
   }
 
-  get mobile(): boolean {
-    return this.#get(HEADERS.MOBILE)?.includes("?1");
+  get mobile(): boolean | undefined {
+    const value = this.#get(HEADERS.MOBILE);
+    return value ? value.includes("?1") : undefined;
   }
 
-  get vendorName(): string {
+  get vendorName(): string | undefined {
     const names = this.#uaVendorsList.map(({ name }) => name);
     return vendors.find((vendor) => names.includes(vendor));
   }
 
-  get vendorVersion(): string {
+  get vendorVersion(): string | undefined {
     const header = this.#get(HEADERS.USER_AGENT_VERSION);
     if (header) {
       return parse(header);
@@ -96,90 +97,91 @@ export class ClientHints {
     const entry = this.#uaVendorsList.find(
       ({ name }) => name === this.vendorName,
     );
-    return entry?.v || entry?.version || "";
+    return entry?.v || entry?.version || undefined;
   }
 
-  get platform(): string {
+  get platform(): string | undefined {
     return parse(this.#get(HEADERS.USER_AGENT_PLATFORM));
   }
 
-  get platformVersion(): string {
+  get platformVersion(): string | undefined {
     return parse(this.#get(HEADERS.USER_AGENT_PLATFORM_VERSION));
   }
 
-  get fetchSite(): string {
+  get fetchSite(): string | undefined {
     return parse(this.#get(HEADERS.FETCH_SITE));
   }
 
-  get fetchMode(): string {
+  get fetchMode(): string | undefined {
     return parse(this.#get(HEADERS.FETCH_MODE));
   }
 
-  get fetchDest(): string {
+  get fetchDest(): string | undefined {
     return parse(this.#get(HEADERS.FETCH_DEST));
   }
 
-  get fetchDestination(): string {
+  get fetchDestination(): string | undefined {
     return parse(this.#get(HEADERS.FETCH_DEST));
   }
 
-  get fetchUser(): boolean {
-    return this.#get(HEADERS.FETCH_USER)?.includes("?1");
+  get fetchUser(): boolean | undefined {
+    const value = this.#get(HEADERS.FETCH_USER);
+    return value ? value.includes("?1") : undefined;
   }
 
-  get arch(): string {
+  get arch(): string | undefined {
     return parse(this.#get(HEADERS.USER_AGENT_ARCH));
   }
 
-  get architecture(): string {
+  get architecture(): string | undefined {
     return parse(this.#get(HEADERS.USER_AGENT_ARCH));
   }
 
-  get model(): string {
+  get model(): string | undefined {
     return parse(this.#get(HEADERS.USER_AGENT_MODEL));
   }
 
-  get deviceMemory(): number {
+  get deviceMemory(): number | undefined {
     return toNumber(parse(this.#get(HEADERS.DEVICE_MEMORY)));
   }
 
-  get contentDevicePixelRatio(): number {
+  get contentDevicePixelRatio(): number | undefined {
     return toNumber(parse(this.#get(HEADERS.CONTENT_DPR)));
   }
 
-  get contentDpr(): number {
+  get contentDpr(): number | undefined {
     return toNumber(parse(this.#get(HEADERS.CONTENT_DPR)));
   }
 
-  get devicePixelRatio(): number {
+  get devicePixelRatio(): number | undefined {
     return toNumber(parse(this.#get(HEADERS.DPR)));
   }
 
-  get dpr(): number {
+  get dpr(): number | undefined {
     return toNumber(parse(this.#get(HEADERS.DPR)));
   }
 
-  get effectiveConnectionType(): string {
+  get effectiveConnectionType(): string | undefined {
     return parse(this.#get(HEADERS.ECT));
   }
 
-  get ect(): string {
+  get ect(): string | undefined {
     return parse(this.#get(HEADERS.ECT));
   }
 
-  get downlink(): number {
+  get downlink(): number | undefined {
     return toNumber(parse(this.#get(HEADERS.DOWNLINK)));
   }
 
-  get width(): number {
+  get width(): number | undefined {
     return toNumber(parse(this.#get(HEADERS.WIDTH)));
   }
 
-  get viewportWidth(): number {
+  get viewportWidth(): number | undefined {
     return toNumber(parse(this.#get(HEADERS.VIEWPORT_WIDTH)));
   }
 
-  get purpose(): string {
+  get purpose(): string | undefined {
     return parse(this.#get(HEADERS.PURPOSE));
   }
 }

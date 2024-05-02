@@ -14,6 +14,14 @@ describe("client-hints", () => {
       const hints = new ClientHints(headers);
       assert.equal(hints.mobile, true);
     });
+    it("returns undefined when relevant header is missing", () => {
+      const headers = {};
+      const hints = new ClientHints(headers);
+      assert.equal(hints.mobile, undefined);
+      assert.equal(hints.platform, undefined);
+      assert.equal(hints.vendorName, undefined);
+      assert.equal(hints.platformVersion, undefined);
+    });
   });
   describe("Sec-CH-UA, Sec-CH-UA-Full-Version-List, Sec-CH-UA-Full-Version", () => {
     it("get vendor from user agent", () => {
