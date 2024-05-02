@@ -2,6 +2,7 @@
 
 exports[`client-hints general pases to JSON 1`] = `
 "{
+  "mobile": false,
   "vendorName": "Google Chrome",
   "vendorVersion": "117.0.5938.132",
   "platform": "macOS",

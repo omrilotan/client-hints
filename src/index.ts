@@ -17,7 +17,8 @@ const HEADERS = {
   FETCH_MODE: "sec-fetch-mode",
   FETCH_SITE: "sec-fetch-site",
   FETCH_USER: "sec-fetch-user",
-  MOBILE: "sec-ch-mobile",
+  GPC: "sec-gpc",
+  MOBILE: "sec-ch-ua-mobile",
   PURPOSE: "sec-purpose",
   USER_AGENT_ARCH: "sec-ch-ua-arch",
   USER_AGENT_MODEL: "sec-ch-ua-model",
@@ -183,5 +184,10 @@ export class ClientHints {
 
   get purpose(): string | undefined {
     return parse(this.#get(HEADERS.PURPOSE));
+  }
+
+  get gpc(): boolean | undefined {
+    const value = this.#get(HEADERS.GPC);
+    return value ? value === "1" : undefined;
   }
 }

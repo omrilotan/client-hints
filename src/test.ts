@@ -5,12 +5,12 @@ describe("client-hints", () => {
   describe("Sec-CH-UA-Mobile", () => {
     it("parse from Headers", () => {
       const headers = new Headers();
-      headers.set("sec-ch-mobile", "?1");
+      headers.set("sec-ch-ua-mobile", "?1");
       const hints = new ClientHints(headers);
       assert.equal(hints.mobile, true);
     });
     it("parse from heaaders object", () => {
-      const headers = { "sec-ch-mobile": "?1" };
+      const headers = { "sec-ch-ua-mobile": "?1" };
       const hints = new ClientHints(headers);
       assert.equal(hints.mobile, true);
     });

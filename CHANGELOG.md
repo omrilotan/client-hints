@@ -1,5 +1,10 @@
 # Change Log
 
+## 2.1.0
+
+- Add "gpc" hint: Consents to sell or share personal information.
+- Fix mobile hint (bug).
+
 ## 2.0.0
 
 - Missing headers are now `undefined` instead of compatible empty values ("", 0, false).
