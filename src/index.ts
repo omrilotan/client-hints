@@ -50,8 +50,8 @@ export class ClientHints {
    */
   #get(name: string): string | undefined {
     const list = this.entries
-    .filter(([key]) => key === name)
-    .map(([, value]) => value);
+      .filter(([key]) => key === name)
+      .map(([, value]) => value);
     return list.length ? list.join(", ") : undefined;
   }
 
