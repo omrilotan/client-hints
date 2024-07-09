@@ -32,11 +32,11 @@ All detections return `undefined` if the relevant header is not available.
 | Feature                                 | Type      | Header                                                           | Meaning                                        | Adoption level |
 | --------------------------------------- | --------- | ---------------------------------------------------------------- | ---------------------------------------------- | -------------- |
 | `arch`, `architecture`                  | _string_  | Sec-CH-UA-Arch                                                   | CPU architecture                               | Experimental   |
+| `bitness`                               | _number_  | Sec-CH-UA-Bitness                                                | CPU bitness (32, 64)                           | Experimental   |
 | `contentDpr`, `contentDevicePixelRatio` | _number_  | Content-DPR                                                      | Image device pixel ratio                       | Deprecated     |
 | `deviceMemory`                          | _number_  | Device-Memory                                                    | Appr. available RAM                            | Experimental   |
 | `downlink`                              | _number_  | Downlink                                                         | Network speed (Mbps)                           | Experimental   |
 | `dpr`, `devicePixelRatio`               | _number_  | DPR                                                              | Device pixel ratio                             | Deprecated     |
-| `dpr`, `devicePixelRatio`               | _string_  | Content-DPR                                                      | Image device to pixel ratio                    | Experimental   |
 | `ect`, `effectiveConnectionType`        | _string_  | ECT                                                              | Network profile (G)                            | Experimental   |
 | `fetchDest`, `fetchDestination`         | _string_  | Sec-Fetch-Dest                                                   | Resource type                                  |
 | `fetchMode`                             | _string_  | Sec-Fetch-Mode                                                   | Navigation type                                |
@@ -47,6 +47,9 @@ All detections return `undefined` if the relevant header is not available.
 | `model`                                 | _string_  | Sec-CH-UA-Model                                                  | Device model                                   | Experimental   |
 | `platform`                              | _string_  | Sec-CH-UA-Platform                                               | Operating system name                          | Experimental   |
 | `platformVersion`                       | _string_  | Sec-CH-UA-Platform-Version                                       | Operating system version                       | Experimental   |
+| `prefersColorScheme`                    | _string_  | Sec-CH-Prefers-Color-Scheme                                      | User's preferred color scheme                  | Experimental   |
+| `prefersReducedMotion`                  | _boolean_ | Sec-CH-Prefers-Reduced-Motion                                    | User prefers reduced motion                    | Experimental   |
+| `prefersReducedTransparency`            | _boolean_ | Sec-CH-Prefers-Reduced-Transparency                              | User prefers reduced transparency              | Experimental   |
 | `purpose`                               | _string_  | Sec-Purpose                                                      | Resource purpose (prefetch)                    | Experimental   |
 | `vendorName`                            | _string_  | Sec-CH-UA / Sec-CH-UA-Full-Version-List                          | Browser Name                                   | Experimental   |
 | `vendorVersion`                         | _string_  | Sec-CH-UA-Full-Version / Sec-CH-UA / Sec-CH-UA-Full-Version-List | Browser version                                | Experimental   |

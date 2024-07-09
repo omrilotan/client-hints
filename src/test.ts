@@ -32,13 +32,37 @@ describe("client-hints", () => {
       const hints = new ClientHints(headers);
       assert.equal(hints.vendorName, "Microsoft Edge");
     });
-    it("get vendor from list", () => {
+    it.each([
+      ['"Not:A-Brand";v="8.0.0.0", "Chromium";v="123.0.6312.59"', "Chromium"],
+      ['"?Not:Your Browser"; v="11", "Chromium"; v="73"', "Chromium"],
+      [
+        '"Chromium";v="122.0.6261.112", "Not(A:Brand";v="24.0.0.0", "Microsoft Edge";v="122.0.2365.80"',
+        "Microsoft Edge",
+      ],
+      [
+        '" Not A;Brand";v="99.0.0.0", "Chromium";v="100.0.4758.109", "Google Chrome";v="100.0.4758.109"',
+        "Google Chrome",
+      ],
+      ['"Not/A)Brand";v="8", "Chromium";v="126", "Brave";v="126"', "Brave"],
+      ['"Opera";v="111", "Chromium";v="125", "Not.A/Brand";v="24"', "Opera"],
+      [
+        '"Not A(Brand";v="99.0.0.0", "Opera GX";v="107.0.5045.79", "Chromium";v="121.0.6167.186',
+        "Opera GX",
+      ],
+      [
+        '"Chromium";v="122.0.6261.57", "Not(A:Brand";v="24.0.0.0", "HeadlessChrome";v="122.0.6261.57"',
+        "HeadlessChrome",
+      ],
+      [
+        '"Not_A Brand";v="8.0.0.0", "Chromium";v="120.0.6099.291", "YaBrowser";v="24.1.4.827", "Yowser";v="2.5"',
+        "YaBrowser",
+      ],
+    ])("get vendor from list", (fullVersionList, expected) => {
       const headers = new Headers({
-        "Sec-CH-UA-Full-Version-List":
-          '" Not A;Brand";v="99.0.0.0", "Chromium";v="100.0.4758.109", "Google Chrome";v="100.0.4758.109"',
+        "Sec-CH-UA-Full-Version-List": fullVersionList,
       });
       const hints = new ClientHints(headers);
-      assert.equal(hints.vendorName, "Google Chrome");
+      assert.equal(hints.vendorName, expected);
     });
     it("prefer vendor list", () => {
       const headers = new Headers({

@@ -1,5 +1,10 @@
 # Change Log
 
+# 2.2.0
+
+- Add hints: "bitness", "prefersColorScheme", "prefersReducedMotion", "prefersReducedTransparency"
+- Improved vendor name recognition
+
 ## 2.1.0
 
 - Add "gpc" hint: Consents to sell or share personal information.

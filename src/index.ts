@@ -4,10 +4,19 @@ import { uaVendorsList } from "./uaVendorsList";
 
 /**
  * Known vendor names in level of priority
+ * Used to prioritize Chromium based browsers the name even though the name "Chromium" may appear first in the list
  */
-const vendors = ["Chrome", "Google Chrome", "Microsoft Edge", "Chromium"];
+const vendors: string[] = [
+  "Chrome",
+  "Google Chrome",
+  "Microsoft Edge",
+  "Brave",
+  "HeadlessChrome",
+  "YaBrowser",
+];
 
-const HEADERS = {
+const HEADERS: Record<string, string> = {
+  BITNESS: "sec-ch-ua-bitness",
   CONTENT_DPR: "content-dpr",
   DEVICE_MEMORY: "device-memory",
   DOWNLINK: "downlink",
@@ -19,6 +28,9 @@ const HEADERS = {
   FETCH_USER: "sec-fetch-user",
   GPC: "sec-gpc",
   MOBILE: "sec-ch-ua-mobile",
+  PREFERS_COLOR_SCHEME: "sec-ch-prefers-color-scheme",
+  PREFERS_REDUCED_MOTION: "sec-ch-prefers-reduced-motion",
+  PREFERS_REDUCED_TRANSPARENCY: "sec-ch-prefers-reduced-transparency",
   PURPOSE: "sec-purpose",
   USER_AGENT_ARCH: "sec-ch-ua-arch",
   USER_AGENT_MODEL: "sec-ch-ua-model",
@@ -86,8 +98,10 @@ export class ClientHints {
   }
 
   get vendorName(): string | undefined {
-    const names = this.#uaVendorsList.map(({ name }) => name);
-    return vendors.find((vendor) => names.includes(vendor));
+    const names = this.#uaVendorsList
+      .map(({ name }) => name)
+      .filter((name) => !/^[\W]*not/i.test(name));
+    return vendors.find((vendor) => names.includes(vendor)) ?? names.at(0);
   }
 
   get vendorVersion(): string | undefined {
@@ -138,6 +152,10 @@ export class ClientHints {
     return parse(this.#get(HEADERS.USER_AGENT_ARCH));
   }
 
+  get bitness(): number | undefined {
+    return toNumber(parse(this.#get(HEADERS.BITNESS)));
+  }
+
   get model(): string | undefined {
     return parse(this.#get(HEADERS.USER_AGENT_MODEL));
   }
@@ -180,6 +198,32 @@ export class ClientHints {
 
   get viewportWidth(): number | undefined {
     return toNumber(parse(this.#get(HEADERS.VIEWPORT_WIDTH)));
+  }
+
+  get prefersColorScheme(): "light" | "dark" | undefined {
+    return parse(this.#get(HEADERS.PREFERS_COLOR_SCHEME));
+  }
+
+  get prefersReducedMotion(): boolean | undefined {
+    switch (this.#get(HEADERS.PREFERS_REDUCED_MOTION)) {
+      case "no-preference":
+        return false;
+      case "reduce":
+        return true;
+      default:
+        return undefined;
+    }
+  }
+
+  get prefersReducedTransparency(): boolean | undefined {
+    switch (this.#get(HEADERS.PREFERS_REDUCED_TRANSPARENCY)) {
+      case "no-preference":
+        return false;
+      case "reduce":
+        return true;
+      default:
+        return undefined;
+    }
   }
 
   get purpose(): string | undefined {

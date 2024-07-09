@@ -1,4 +1,4 @@
-const NULLABLES = [null, undefined, ""];
+const NULLABLES: (null | undefined | "")[] = [null, undefined, ""];
 
 /**
  * Convert numeric to numbers and others to undefined
