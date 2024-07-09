@@ -1,6 +1,6 @@
 # client-hints [![](https://img.shields.io/npm/v/client-hints.svg?style=flat-square)](https://www.npmjs.com/package/client-hints)
 
-🕵️‍♂️ Parse client hints headers
+🕵️‍♂️ Parse client hints headers and provide a convenient API to access device information and user preferences
 
 Use client hints, where available
 
@@ -56,7 +56,7 @@ All detections return `undefined` if the relevant header is not available.
 | `viewportWidth`                         | _number_  | Viewport-Width                                                   | Layout viewport width                          | Deprecated     |
 | `width`                                 | _number_  | Width                                                            | Resource desired width                         | Deprecated     |
 
-## Client Hints Intruction Response Header
+## Client Hints Instructions Response Header
 
 Set the value of `Accept-CH` header to include the headers you want the browse to send.
 

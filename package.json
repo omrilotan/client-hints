@@ -1,10 +1,11 @@
 {
   "name": "client-hints",
-  "version": "2.2.0",
-  "description": "🕵️‍♂️ Parse client hints headers",
+  "version": "2.2.1",
+  "description": "🕵️‍♂️ Parse client hints headers and provide a convenient API to access device information and user preferences",
   "keywords": [
     "client-hints",
     "headers",
+    "sec-ch",
     "🕵️‍♂️"
   ],
   "author": "omrilotan <hi@omrilotan.com> (https://omrilotan.com/)",

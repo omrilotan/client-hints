@@ -1,5 +1,9 @@
 # Change Log
 
+# 2.2.1
+
+- Add descriptions to getters (useful in IDEs).
+
 # 2.2.0
 
 - Add hints: "bitness", "prefersColorScheme", "prefersReducedMotion", "prefersReducedTransparency"
