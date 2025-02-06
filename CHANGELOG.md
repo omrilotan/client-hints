@@ -1,5 +1,9 @@
 # Change Log
 
+# 2.2.2
+
+- Comply with newer Typescript exports (error TS7016)
+
 # 2.2.1
 
 - Add descriptions to getters (useful in IDEs).
